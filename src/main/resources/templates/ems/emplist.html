@@ -40,7 +40,7 @@
             <div>
                 <h2 style="color:orangered;font-style: italic;font-weight: bold;font-size: large"
                     th:text="${session.kind=='International'?'国际关系':session.kind=='Policy'?'政策方针':'社会事件'}"></h2>
-                <!--/*@thymesVar id="ourPost" type="com.baizhi.entity.OurPost"*/-->
+                <!--/*@thymesVar id="ourPost" type="com.fengyimei.entity.OurPost"*/-->
                 <form class="row form-group" th:action="@{/savepost}" th:object="${ourPost}" method="post">
                     <textarea th:field="*{content}" rows="10" class="form-control" style="resize: vertical"
                         placeholder="说些什么吧"></textarea><br>

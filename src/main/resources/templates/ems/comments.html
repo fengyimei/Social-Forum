@@ -41,7 +41,7 @@
 
             <div>
                 <!--<p style="color:orangered;font-style: italic;font-weight: bold;font-size: large" text="国际关系">国际关系</p> -->
-                <!--/*@thymesVar id="ourPost" type="com.baizhi.entity.OurPost"*/-->
+                <!--/*@thymesVar id="ourPost" type="com.fengyimei.entity.OurPost"*/-->
                 <form class="row form-group"  th:action="@{/savecomment}" th:object="${ourComment}" method="post">
                     <textarea th:field="*{content}" rows="3" class="form-control" style="resize: vertical" placeholder="说些什么吧"></textarea><br><br>
                     <input  type="submit" class="button" value="发表" onclick="test()"/>
