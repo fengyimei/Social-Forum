@@ -1,0 +1,370 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www/thymeleaf.org">
+<head>
+    <title>regist</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css">
+</head>
+<style>
+body {
+    margin: 0;
+    font-size: 62.5%;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    padding: 15px 0;
+    background: #eeeeee;
+}
+
+input.button {
+    margin: 0;
+    padding: 5px;
+    border: 3px double #999999;
+    border-left-color: #ccc;
+    border-top-color: #ccc;
+    background: url(./img/button.gif) repeat-x left top;
+    font-size: 11px;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    width:50px;
+}
+
+input.inputgri, select.inputgri, textarea.inputgri {
+    background: #eeeeee;
+    font-size: 14px;
+    border: 1px solid #cccccc;
+    padding: 3px;
+}
+
+input.inputgri:focus, select.inputgri:focus, textarea.inputgri:focus {
+    background: #ffffff;
+    border: 1px solid #686868;
+}
+#wrap {
+    width: 820px;
+    margin: 0 auto;
+    background: url(./img/bg.gif) top repeat-y #FFFFFF;
+}
+#top_content {
+    padding: 0 10px;
+}
+
+#topheader {
+    padding: 25px 15px 15px 15px;
+    margin: 0 auto 0 auto;
+    background: url(./img/top_left.gif) top left repeat-x #85C329;
+}
+
+#rightheader {
+    float: right;
+    width: 375px;
+    height: 40px;
+    color: #FFFFFF;
+    text-align: right;
+}
+
+#title {
+    padding: 0;
+    margin: 0;
+    font-size: 2.5em;
+    color: crimson;
+}
+
+#title span {
+    font-size: 0.5em;
+    font-style: italic;
+}
+
+#title a:link, #title a:visited {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+#title a:hover {
+    color: #E1F3C7;
+}
+
+.form_table {
+    margin-bottom: 15px;
+    font-size: 1.1em;
+}
+
+.form_table p {
+    margin: 0;
+    padding: 0;
+}
+
+.form_table td {
+    padding: 5px 10px;
+}
+
+#content {
+    padding: 0 15px;
+    margin: 0 auto 0 auto;
+    background: url(./img/content_bg.gif) repeat-x left top #ffffff;
+    color: #666666;
+}
+
+#content p#whereami {
+    padding: 20px 0 15px 0;
+    margin: 0;
+}
+
+#content .other_links h2 {
+    color: #999999;
+    padding: 0 0 0 3px;
+    margin: 0;
+}
+
+#content .other_links ul {
+    padding: 0;
+    margin: 0;
+}
+
+#content .other_links ul li {
+    padding: 0 0 0 20px;
+    background: url(../img/bullet_grey.gif) no-repeat left center;
+}
+
+#content .other_links a, #content .other_links a:visited {
+    color: #999999;
+    text-decoration: underline;
+}
+
+#content .other_links a:hover {
+    color: #666666;
+}
+
+#navigation {
+    background: #74A8F5;
+    border-top: 1px solid #ffffff;
+    height: 25px;
+    clear: both
+}
+
+#navigation ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    font-size: 1.1em;
+    height: 25px;
+}
+
+#navigation ul li {
+    display: inline;
+}
+
+#navigation ul li a {
+    color: #FFFFFF;
+    display: block;
+    text-decoration: none;
+    float: left;
+    line-height: 25px;
+    padding: 0 16px;
+    border-right: 1px solid #ffffff;
+}
+
+#navigation ul li a:hover {
+    background: #5494F3;
+}
+
+.table {
+    margin-bottom: 15px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table_header td {
+    background: url(../img/tableheader-bg.gif) no-repeat left top;
+    padding: 5px 10px;
+    color: rgb(70, 122, 167);
+    border-top: 1px solid #CBD6DE;
+    border-bottom: 1px solid #ADBECB;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.table_header td a:link, .table_header td a:visited {
+    text-decoration: underline;
+    color: rgb(70, 122, 167);
+}
+
+.table_header td a:hover {
+    text-decoration: underline;
+    color: #73A822;
+}
+
+.table_header td {
+    border: 1px solid #CBD6DE;
+}
+
+
+#content h1, #content h2,
+#content h3, #content h4, #content h5 {
+    color: #74A8F5;
+}
+</style>
+<body>
+<div id="wrap">
+    <div id="top_content">
+        <div id="header">
+            <div id="rightheader">
+                <p>
+                    2021/3/8
+                    <br/>
+                </p>
+            </div>
+            <div id="topheader">
+                <h1 id="title">
+                    <a href="#">欢迎注册</a>
+                </h1>
+            </div>
+            <div id="navigation">
+            </div>
+        </div>
+        <div id="content">
+            <p id="whereami">
+            </p>
+            <h1>
+                注册
+            </h1>
+            <form  method="post">
+                <p style="color:red"></p>
+                <table cellpadding="0" cellspacing="0" border="0"
+                       class="form_table">
+                    <tr>
+                        <td valign="middle" align="right" >
+                            用户名:
+                        </td>
+                        <td valign="middle" align="left">
+                            <input id="temp" type="text" class="inputgri" name="username"/>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td valign="middle" align="right">
+                            真实姓名:
+                        </td>
+                        <td valign="middle" align="left">
+                            <input type="text" class="inputgri" name="realname"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="middle" align="right">
+                            密码:
+                        </td>
+                        <td valign="middle" align="left">
+                            <input type="password" class="inputgri" name="password"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="middle" align="right">
+                            性别:
+                        </td>
+                        <td valign="middle" align="left">
+                            男
+                            <input type="radio" class="inputgri" name="sex" value="男" checked="checked"/>
+                            女
+                            <input type="radio" class="inputgri" name="sex" value="女"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="middle" align="right">
+                            生日:
+                        </td>
+                        <td valign="middle" align="left">
+                            <input type="date" class="inputgri" name="birth"/>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td valign="middle" align="right">
+                           城市:
+                        </td>
+                        <td valign="middle" align="left">
+                            <input type="text" class="inputgri" name="city"/>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <td valign="middle" align="right">
+                            您对自己建设论坛的能力评估如何
+                        </td>
+                        <td valign="middle" align="left">
+                            <input type="radio" class="inputgri" name="ability" value="几乎没有作为" checked="checked"/>
+                            几乎没有作为
+                            <input type="radio" class="inputgri" name="ability" value="能有自己的意见"/>
+                            能有自己的意见
+                            <br><br><input type="radio" class="inputgri" name="ability" value="经常提出想法" />
+                            经常提出想法
+                            <input type="radio" class="inputgri" name="ability" value="常常会引导建设板块"/>
+                            常常会引导建设板块
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td valign="middle" align="right">
+                            您在媒介使用中更倾向于用怎样的方式提高板块活跃度
+                        </td>
+                        <td valign="middle" align="left">
+                            <input type="radio" class="inputgri" name="method" value="点赞" checked="checked"/>
+                            点赞
+                            <input type="radio" class="inputgri" name="method" value="评论"/>
+                            评论
+                            <br><br><input type="radio" class="inputgri" name="method" value="转发" />
+                            转发
+                            <input type="radio" class="inputgri" name="method" value="发文"/>
+                            发文
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td valign="middle" align="right">
+                            您对以下那些话题更为感兴趣
+                        </td>
+                        <td valign="middle" align="left">
+                            <input type="checkbox" class="inputgri" name="interest" value="A1" checked="checked"/>
+                            A1
+                            <input type="checkbox" class="inputgri" name="interest" value="A2"/>
+                            A2
+                            <input type="checkbox" class="inputgri" name="interest" value="A3"/>
+                            A3
+                            <br><br><input type="checkbox" class="inputgri" name="interest" value="B1" />
+                            B1
+                            <input type="checkbox" class="inputgri" name="interest" value="B2"/>
+                            B2
+                            <input type="checkbox" class="inputgri" name="interest" value="B3"/>
+                            B3
+                            <br><br><input type="checkbox" class="inputgri" name="interest" value="C1" />
+                            C1
+                            <input type="checkbox" class="inputgri" name="interest" value="C2"/>
+                            C2
+                            <input type="checkbox" class="inputgri" name="interest" value="C3"/>
+                            C3
+                        </td>
+                    </tr>
+                </table>
+                <p style="text-align: center">
+                    <input  type="submit" class="button"  value="提交 &raquo;" onclick="test()"/>
+                    <script type="text/javascript">
+                        var list = document.querySelectorAll("input");
+                        var text1=list[0]
+                        var text2=list[1]
+                        function test() {
+                             if(text1.value==""){
+                                 alert("您没有输入用户名!");
+                             }
+                             else if(text2.value==""){
+                                alert("您没有输入真实姓名!");
+                             }
+                        }
+                    </script>
+                </p>
+            </form>
+        </div>
+    </div>
+    <div>
+            @CCNU
+    </div>
+</div>
+</body>
+</html>

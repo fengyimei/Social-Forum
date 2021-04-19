@@ -1,0 +1,22 @@
+.a-text {
+    font-size: 14px;
+    color: #0a48f3;
+    cursor: pointer;
+}
+
+.a-text:hover {
+    color: #0142f7;
+}
+
+.p1 {
+    font-size: 16px;
+    color: #0a001f;
+    width: 500px;
+}
+
+.p2 {
+    font-size: 14px;
+    color: #0a001f;
+    width: 500px;
+    display: none;
+}

@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thyemleaf.org">
+<head>
+    <title>emplist</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{css/style.css}"/>
+</head>
+<body>
+<div id="wrap">
+    <div id="top_content">
+        <div id="header">
+            <div id="rightheader">
+                <p>
+                    2021/1/31
+                    <br/>
+                </p>
+            </div>
+            <div id="topheader">
+                <h1 id="title">
+                    <a href="#">评论页面</a>
+                </h1>
+            </div>
+            <div id="navigation">
+            </div>
+        </div>
+        <div id="content">
+            <p id="whereami">
+            </p>
+            <h1 th:text="'欢迎用户:'+${session.username}"></h1>
+            <input type="button" class="button" onclick="window.location.href='/International'" value="国际关系 &raquo;"/> <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <input type="button" class="button" onclick="window.location.href='/Policy'" value="政策方针 &raquo;"/><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <input type="button" class="button" onclick="window.location.href='/Society'" value="社会事件 &raquo;"/><br><br><br>
+            <div th:object="${post}">
+                <span style="font-weight:bold; font-style: italic">帖子作者: </span><span th:text="*{author}"></span><br><br>
+                <span style="font-weight:bold;font-style: italic">帖子内容: </span><span th:if="${post.fid}==null" th:text="*{content}"></span><br><br><br>
+                <div th:if="${post.fid}!=null" >
+                    <span th:text="${post.content}"  style="display: inline;color: #7BB425"></span> <span>&nbsp;&nbsp;&nbsp;&nbsp;</span><br><br><br>
+                </div>
+            </div>
+
+
+            <div>
+                <!--<p style="color:orangered;font-style: italic;font-weight: bold;font-size: large" text="国际关系">国际关系</p> -->
+                <!--/*@thymesVar id="ourPost" type="com.baizhi.entity.OurPost"*/-->
+                <form class="row form-group"  th:action="@{/savecomment}" th:object="${ourComment}" method="post">
+                    <textarea th:field="*{content}" rows="3" class="form-control" style="resize: vertical" placeholder="说些什么吧"></textarea><br><br>
+                    <input  type="submit" class="button" value="发表" onclick="test()"/>
+                    <script type="text/javascript">
+                        let text = document.querySelector("textarea");
+                        //let btn=document.querySelector("input");
+                        console.log(text);
+                        function test() {
+                            if(text.value==""){
+                                alert("您没有输入回复内容!");
+                            }
+                        }
+                    </script>
+                </form>
+            </div>
+
+            <div id="post" class="post"  style="border:2px solid lightgreen" th:each="comment:${comments}">
+                <span style="font-weight:bold; font-style: italic">评论人: </span><span th:text="${comment.author}"></span>  <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span style="font-weight:bold;font-style: italic">评论内容: </span><span th:text="${comment.content}"></span> <span>&nbsp;&nbsp;&nbsp;&nbsp;</span><br><br><br>
+            </div>
+<!--            <p>当前 <span th:text="${pageInfo.pageNum}"></span> 页,总 <span th:text="${pageInfo.pages}"></span> 页,共 <span th:text="${pageInfo.total}"></span> 条记录</p>-->
+<!--            <a th:href="@{/International}">首页</a>-->
+<!--            <a th:href="@{/International(pageNum=${pageInfo.hasPreviousPage}?${pageInfo.prePage}:1)}">上一页</a>-->
+<!--            <a th:href="@{/International(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}">下一页</a>-->
+<!--            <a th:href="@{/International(pageNum=${pageInfo.pages})}">尾页</a>-->
+            <!--            <table class="table">-->
+            <!--                <tr class="table_header">-->
+            <!--                    <td>-->
+            <!--                        ID-->
+            <!--                    </td>-->
+            <!--                    <td>-->
+            <!--                        Name-->
+            <!--                    </td>-->
+            <!--                    <td>-->
+            <!--                        Salary-->
+            <!--                    </td>-->
+            <!--                    <td>-->
+            <!--                        Age-->
+            <!--                    </td>-->
+            <!--                    <td>-->
+            <!--                        Birth-->
+            <!--                    </td>-->
+            <!--                    <td>-->
+            <!--                        Operation-->
+            <!--                    </td>-->
+            <!--                </tr>-->
+            <!--                <tr class="row1" th:each="emp:${emps}">-->
+            <!--                    <td>-->
+            <!--                        <span th:text="${emp.id}"></span>-->
+            <!--                    </td>-->
+            <!--                    <td>-->
+            <!--                        <span th:text="${emp.name}"></span>-->
+            <!--                    </td>-->
+            <!--                    <td>-->
+            <!--                        <span th:text="${emp.salary}"></span>-->
+            <!--                    </td>-->
+            <!--                    <td>-->
+            <!--                        <span th:text="${emp.age}"></span>-->
+            <!--                    </td>-->
+            <!--                    <td>-->
+            <!--                        &lt;!&ndash;日期格式化&ndash;&gt;-->
+            <!--                        <span th:text="${#dates.format(emp.bir,'yyyy-MM-dd')}"></span>-->
+            <!--                    </td>-->
+
+            <!--                    <td>-->
+            <!--                        <a th:href="@{/emp/delete(id=${emp.id})}">删除信息</a>&nbsp;-->
+            <!--                        <a th:href="@{/emp/find(id=${emp.id})}">修改信息</a>-->
+            <!--                    </td>-->
+            <!--                </tr>-->
+
+            <!--            </table>-->
+            <!--            <p>-->
+            <!--                <input type="button" class="button" value="添加员工" onclick="location.href='/ems/toSave'"/>-->
+            <!--            </p>-->
+        </div>
+    </div>
+    <div id="footer">
+        <div id="footer_bg">
+            CCNU
+        </div>
+    </div>
+</div>
+</body>
+</html>

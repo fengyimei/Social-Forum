@@ -1,0 +1,168 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thyemleaf.org">
+
+<head>
+    <title>列表页</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/fold.css}" />
+    <script th:src="@{js/jquery-3.5.1.min.js}"></script>
+    <script th:src="@{js/fold.js}"></script>
+</head>
+
+<div id="wrap">
+    <div id="top_content">
+        <div id="header">
+            <div id="rightheader">
+                <p>
+                    2021/1/31
+                    <br />
+                </p>
+            </div>
+            <div id="topheader">
+                <h1 id="title">
+                    <a href="#">主界面</a>
+                </h1>
+            </div>
+            <div id="navigation">
+            </div>
+        </div>
+        <div id="content">
+            <p id="whereami">
+            </p>
+            <h1 th:text="'欢迎用户:'+${session.username}"></h1>
+            <input type="button" class="button" onclick="window.location.href='/International'" value="国际关系 &raquo;" />
+            <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <input type="button" class="button" onclick="window.location.href='/Policy'"
+                value="政策方针 &raquo;" /><span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <input type="button" class="button" onclick="window.location.href='/Society'"
+                value="社会事件 &raquo;" /><br><br><br>
+            <div>
+                <h2 style="color:orangered;font-style: italic;font-weight: bold;font-size: large"
+                    th:text="${session.kind=='International'?'国际关系':session.kind=='Policy'?'政策方针':'社会事件'}"></h2>
+                <!--/*@thymesVar id="ourPost" type="com.baizhi.entity.OurPost"*/-->
+                <form class="row form-group" th:action="@{/savepost}" th:object="${ourPost}" method="post">
+                    <textarea th:field="*{content}" rows="10" class="form-control" style="resize: vertical"
+                        placeholder="说些什么吧"></textarea><br>
+                    <input type="submit" class="button" value="发表" onclick="test()" />
+                    <script type="text/javascript">
+                        let text = document.querySelector("textarea");
+                        let btn = document.querySelector("input");
+                        // console.log(btn);
+                        function test() {
+                            if (text.value == "") {
+                                alert("您没有输入帖子内容!");
+                            }
+                        }
+                    </script>
+                </form>
+            </div>
+            <br><br>
+            <div id="post" class="post" style="border:2px solid red" th:each="post:${pageInfo.list}">
+                <span style="font-weight:bold; font-style: italic">作者: </span><span th:text="${post.author}"></span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <!-- 开始 20210319 增加按钮箭头 实现折叠和显示功能 -->
+                <div class="content">
+                    <span style="font-weight:bold;font-style: italic" th:if="${post.fid}==null">内容: </span>
+                    <p th:if="${post.fid}==null" th:text="${post.content}" class="p1" style="display: inline"></p>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;</span><br><br><br>
+                </div>
+                <!-- 结束 -->
+                <div th:if="${post.fid}!=null">
+                    <span style="font-weight: bold;font-style: italic;color: #85C329"
+                        th:text="'转发了'+${post.forwardPost.author}+'的帖子'"></span><br>
+                    <span style="font-weight: bold;font-style: italic;color: #85C329">原帖内容：</span> <br><span
+                        th:text="${post.forwardPost.content}" style="display: inline"></span>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;</span><br><br><br>
+                </div>
+                <a class="btn btn-danger" style="color: red" th:href="@{/forwardPost(postId=${post.id})}"
+                    method="post">转发</a> <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <a type="button" class="button" style="color: #7BB425"
+                    th:href="@{/showComments(postId=${post.id})}">评论</a>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <div style="display: inline" th:if="${#strings.isEmpty(post.has_selected)}">
+                    <a class="btn btn-primary" type="button"
+                        th:href="@{/saveAttitude(postId=${post.id},thought='like',pageNum=${pageInfo.pageNum})}"
+                        style="color: deepskyblue">赞</a> <span>&nbsp;</span>
+                    <a class="btn btn-primary" type="button"
+                        th:href="@{/saveAttitude(postId=${post.id},thought='pleasure',pageNum=${pageInfo.pageNum})}"
+                        style="color: deepskyblue">开心</a> <span>&nbsp;</span>
+                    <a class="btn btn-primary" type="button"
+                        th:href="@{/saveAttitude(postId=${post.id},thought='sorrow',pageNum=${pageInfo.pageNum})}"
+                        style="color: deepskyblue">悲伤</a> <span>&nbsp;</span>
+                    <a class="btn btn-primary" type="button"
+                        th:href="@{/saveAttitude(postId=${post.id},thought='anger',pageNum=${pageInfo.pageNum})}"
+                        style="color: deepskyblue">生气</a> <span>&nbsp;</span>
+                    <a class="btn btn-primary" type="button"
+                        th:href="@{/saveAttitude(postId=${post.id},thought='surprise',pageNum=${pageInfo.pageNum})}"
+                        style="color: deepskyblue">惊讶</a> <span>&nbsp;</span>
+                </div>
+                <p style="display: inline;color: #74A8F5;font-style: italic"
+                    th:if="${not #strings.isEmpty(post.has_selected)}" th:text="'您对该帖子的态度为:'+${post.has_selected}"></p>
+            </div>
+            <p>当前 <span th:text="${pageInfo.pageNum}"></span> 页,总 <span th:text="${pageInfo.pages}"></span> 页,共 <span
+                    th:text="${pageInfo.total}"></span> 条记录</p>
+            <a th:href="@{/International}">首页</a>
+            <a th:href="@{'/'+${session.kind}+'?pageNum='+${pageInfo.hasNextPage?pageInfo.nextPage:1}}">上一页</a>
+            <!--  International(pageNum=${pageInfo.hasNextPage}?${pageInfo.nextPage}:${pageInfo.pages})}         -->
+            <a th:href="@{'/'+${session.kind}+'?pageNum='+${pageInfo.hasNextPage?pageInfo.nextPage:1}}">下一页</a>
+            <a th:href="@{/International(pageNum=${pageInfo.pages})}">尾页</a>
+            <!--            <table class="table">-->
+            <!--                <tr class="table_header">-->
+            <!--                    <td>-->
+            <!--                        ID-->
+            <!--                    </td>-->
+            <!--                    <td>-->
+            <!--                        Name-->
+            <!--                    </td>-->
+            <!--                    <td>-->
+            <!--                        Salary-->
+            <!--                    </td>-->
+            <!--                    <td>-->
+            <!--                        Age-->
+            <!--                    </td>-->
+            <!--                    <td>-->
+            <!--                        Birth-->
+            <!--                    </td>-->
+            <!--                    <td>-->
+            <!--                        Operation-->
+            <!--                    </td>-->
+            <!--                </tr>-->
+            <!--                <tr class="row1" th:each="emp:${emps}">-->
+            <!--                    <td>-->
+            <!--                        <span th:text="${emp.id}"></span>-->
+            <!--                    </td>-->
+            <!--                    <td>-->
+            <!--                        <span th:text="${emp.name}"></span>-->
+            <!--                    </td>-->
+            <!--                    <td>-->
+            <!--                        <span th:text="${emp.salary}"></span>-->
+            <!--                    </td>-->
+            <!--                    <td>-->
+            <!--                        <span th:text="${emp.age}"></span>-->
+            <!--                    </td>-->
+            <!--                    <td>-->
+            <!--                        &lt;!&ndash;日期格式化&ndash;&gt;-->
+            <!--                        <span th:text="${#dates.format(emp.bir,'yyyy-MM-dd')}"></span>-->
+            <!--                    </td>-->
+
+            <!--                    <td>-->
+            <!--                        <a th:href="@{/emp/delete(id=${emp.id})}">删除信息</a>&nbsp;-->
+            <!--                        <a th:href="@{/emp/find(id=${emp.id})}">修改信息</a>-->
+            <!--                    </td>-->
+            <!--                </tr>-->
+
+            <!--            </table>-->
+            <!--            <p>-->
+            <!--                <input type="button" class="button" value="添加员工" onclick="location.href='/ems/toSave'"/>-->
+            <!--            </p>-->
+        </div>
+    </div>
+    <div id="footer">
+        <div id="footer_bg">
+            CCNU
+        </div>
+    </div>
+</div>
+</body>
+</html>
